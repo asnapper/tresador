@@ -1,7 +1,24 @@
 import React, { useState, useEffect } from 'react'
+import injectSheet from 'react-jss'
 import { API_PREFIX } from '../constants'
 
-export const Observaciones = () => {
+const styles = theme => ({
+    root: {
+        textAlign: 'left',
+        width: '100%'
+    },
+    header: {
+        backgroundColor: theme.backgroundColor,
+        color: theme.textColor,
+        fontWeight: 'bold'
+    },
+    row: {
+        color: theme.textColor
+    }
+})
+
+export const Observaciones = ({ classes }) => {
+
 
     const [observaciones, setObservaciones] = useState([])
 
@@ -16,24 +33,24 @@ export const Observaciones = () => {
         fetchObservaciones()
     }, [])
 
-    return <table>
-        <thead>
+    return <table className={classes.root}>
+        <thead className={classes.header}>
             <tr>
                 <th>{'ob.ts'}</th>
                 <th>{'ob.valia'}</th>
-                <th>{'ob.usario'}</th>
+                <th>{'ob.usario_fk'}</th>
             </tr>
         </thead>
         <tbody>
             {observaciones.map(ob => {
-                return <tr key={ob.id}>
+                return <tr key={ob.id}  className={classes.row}>
                     <td>{ob.ts}</td>
                     <td>{ob.valia}</td>
-                    <td>{ob.usario}</td>
+                    <td>{ob.usario_fk}</td>
                 </tr>
             })}
         </tbody>
     </table>
 }
 
-export default Observaciones
+export default injectSheet(styles)(Observaciones)
