@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import injectSheet from 'react-jss'
+import { createUseStyles, useTheme } from 'react-jss'
 import { API_PREFIX } from '../constants'
 
-const styles = theme => ({
+const useStyles = createUseStyles(theme => ({
     root: {
         textAlign: 'left',
         width: '100%'
@@ -15,10 +15,12 @@ const styles = theme => ({
     row: {
         color: theme.textColor
     }
-})
+}))
 
-export const Observaciones = ({ classes }) => {
+export const Observaciones = () => {
 
+    const theme = useTheme()
+    const classes = useStyles(theme)
 
     const [observaciones, setObservaciones] = useState([])
 
@@ -53,4 +55,4 @@ export const Observaciones = ({ classes }) => {
     </table>
 }
 
-export default injectSheet(styles)(Observaciones)
+export default Observaciones
