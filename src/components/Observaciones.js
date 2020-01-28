@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { createUseStyles, useTheme } from 'react-jss'
+
+import { getObservaciones }  from '../actions/observaciones'
 import { API_PREFIX } from '../constants'
 
 const useStyles = createUseStyles(theme => ({
@@ -22,17 +25,13 @@ export const Observaciones = () => {
     const theme = useTheme()
     const classes = useStyles(theme)
 
-    const [observaciones, setObservaciones] = useState([])
-
-    const fetchObservaciones = () => {
-        fetch(API_PREFIX + '/observaciones')
-            .then(res => res.json())
-            .then(obs => obs.sort((a, b) => +new Date(b.ts) - +new Date(a.ts)))
-            .then(obs => setObservaciones(obs))
-    }
+    const dispatch = useDispatch()
+    const observaciones = useSelector((state) => state.observaciones.observaciones)
+    const loading = useSelector((state) => state.observaciones.loading)
+    const error = useSelector((state) => state.observaciones.error)
 
     useEffect(() => {
-        fetchObservaciones()
+        getObservaciones()(dispatch)
     }, [])
 
     return <table className={classes.root}>

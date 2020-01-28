@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { Provider } from 'react-redux'
 import Observaciones from './Observaciones'
 import { API_PREFIX } from '../constants'
+import store from '../store'
 
 export const App = () => {
 
@@ -16,11 +18,11 @@ export const App = () => {
     }
 
 
-    return <div>
+    return <Provider store={store}>
         <button onClick={handlePageViewClick}>Click Me Bitch!</button>
 
         <Observaciones />
-    </div>
+    </Provider>
 }
 
 export default App
